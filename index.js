@@ -27,13 +27,17 @@ C.right = G;
  *
  */
 
-function deepSearch (root, target) {
-    if (root == null) return false;
-    if (root.value === target) return true;
-    const left = deepSearch(root.left, target);
-    const right = deepSearch(root.right, target);
-
-    return left || right;
+function f1 (root, target) {
+    const rootList = Object.prototype.toString.call(root) === "[object Array]" ? root : [root];
+    if (rootList == null || rootList.length === 0) return false;
+    let childList = [];
+    for (const v of rootList) {
+        if (v != null && v.value === target) return true;
+        else {
+            childList.push(v.left, v.right);
+        }
+    }
+    return f1(childList, target);
 }
 
-console.log(deepSearch(A, 'F'));
+console.log(f1(A, 'F'));
